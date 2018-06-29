@@ -1,0 +1,32 @@
+html {
+  font-family: arial;
+}
+
+.largetest {
+  color: red;
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .desktopcontent {
+    display: inherit;
+  }
+  .mobilecontent {
+    display: none;
+  }
+}
+
+@media (max-width: 767px) {
+  .mobilecontent {
+    display: inherit;
+  }
+  .desktopcontent {
+    display: none;
+  }
+}
+
+.nav-link {
+  cursor: pointer;
+  color: #212529;
+  width: 100%;
+}
