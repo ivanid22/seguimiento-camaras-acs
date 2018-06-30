@@ -15,15 +15,14 @@ Tracker.autorun(() => {
     Meteor.subscribe('camaras');
 })
 
-Tracker.autorun(() => {
-    const user = Meteor.user();
-    onAuthChange();
-})
-
 
 Meteor.startup(() => {
     Session.set({
       camaraActiva: undefined
     });
+    Tracker.autorun(() => {
+        const user = Meteor.user();
+        onAuthChange();
+    })
     ReactDOM.render(routes, document.getElementById('app'))
 })
