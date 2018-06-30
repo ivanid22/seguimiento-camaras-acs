@@ -17,7 +17,7 @@ export const onAuthChange = () => {
       browserHistory.replace('/login');
     }
     if(Meteor.user() && publicRoutes.includes(now)) {
-      browserHistory.replace('/camaras');
+      browserHistory.replace('/');
     }
 }
 

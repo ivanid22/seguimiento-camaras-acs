@@ -11,11 +11,6 @@ import {Tracker} from 'meteor/tracker';
 import moment from 'moment';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-Tracker.autorun(() => {
-    Meteor.subscribe('camaras');
-})
-
-
 Meteor.startup(() => {
     Session.set({
       camaraActiva: undefined

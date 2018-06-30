@@ -20,7 +20,7 @@ export class ListaCamaras extends React.Component {
   }
 
   renderList() {
-    if(this.state.items.length !== 0) {
+    if(this.props.items.length !== 0) {
       return this.props.items.map((item) => {
           return <ItemListaCamaras key={item._id} item={item}/>
         });
