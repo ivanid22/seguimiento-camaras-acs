@@ -7,7 +7,7 @@ import {browserHistory} from 'react-router';
 import {withTracker} from 'meteor/react-meteor-data';
 import {NavBar} from './NavBar';
 import moment from 'moment';
-import {FormGroup, FormControl, ControlLabel, Button, Alert, Form, Label, Input, FormFeedback} from 'reactstrap';
+import DateTimePicker from 'react-datetime-picker';
 
 
 export class AgregarEvento extends React.Component {
@@ -16,8 +16,10 @@ export class AgregarEvento extends React.Component {
     this.state = {
       error: '',
       descripcionEvento: 'Reseteo por software',
-      selectedOption: 'soft'
+      selectedOption: 'soft',
+      momento: new Date()
     }
+    moment.locale('es');
   }
 
   cerrar() {
@@ -45,7 +47,7 @@ export class AgregarEvento extends React.Component {
   onSubmit(e) {
     e.preventDefault();
     if(Session.get('camaraActiva')) {
-        const res = Meteor.call('eventos.insert', Session.get('camaraActiva'), moment().valueOf(), this.state.descripcionEvento, (err, res) => {
+        const res = Meteor.call('eventos.insert', Session.get('camaraActiva'), moment(this.state.momento).valueOf(), this.state.descripcionEvento, (err, res) => {
           if(!err) {
             this.cerrar();
           }
@@ -55,7 +57,15 @@ export class AgregarEvento extends React.Component {
           }
         });
       }
-    }
+  }
+
+  setDate(e) {
+    this.setState({momento: e});
+    console.log(e);
+    console.log(moment(e).valueOf());
+    console.log(moment().valueOf());
+  }
+
 
   render() {
     return(
@@ -79,6 +89,10 @@ export class AgregarEvento extends React.Component {
                   <label htmlFor="descripcionText">Descripcion</label>
                   <textarea className="form-control" rows="5" id="descripcionText" ref="txtarea" disabled={!(this.state.selectedOption === 'other')} value={this.state.descripcionEvento} onChange={(e) =>{this.setState({descripcionEvento: e.target.value})}}/>
                 </div>
+              </div>
+              <div className="form-group">
+                <label htmlFor="pickerId" className="mr-3">Fecha y hora</label>
+                <DateTimePicker id="pickerId" value={this.state.momento} onChange={this.setDate.bind(this)}/>
               </div>
             </div>
             {this.state.error !== '' ? <div className="alert alert-danger"><strong>Error! </strong><p>{this.state.error}</p></div> : undefined }
