@@ -18,7 +18,7 @@ export class Dashboard extends React.Component {
             <div className="row">
               <div className="col-lg-3 col-md-3">
                 <ListaCamarasContainer/>
-                
+
               </div>
               <div className="col-lg-9 col-md-9">
                 <ListaEventosContainer/>
@@ -29,7 +29,9 @@ export class Dashboard extends React.Component {
         <div className="mobilecontent">
           <div className="container">
             <ListaCamarasContainer/>
-            <ListaEventosContainer/>
+            <div className="mt-3">
+                {/* <ListaEventosContainer/> */}
+            </div>
           </div>
         </div>
       </div>

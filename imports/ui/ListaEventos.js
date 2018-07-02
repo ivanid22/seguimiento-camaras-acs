@@ -27,7 +27,6 @@ class ListaEventosItem extends React.Component {
 export class ListaEventos extends React.Component {
 
   renderEventos() {
-    console.log(this.props.eventos)
     if(this.props.eventos.length !== 0) {
       return(
         this.props.eventos.map((evento) => {
@@ -45,15 +44,16 @@ export class ListaEventos extends React.Component {
     return(
       <div>
         {this.renderEventos()}
-        {!!Session.get('camaraActiva') ? <div className="desktopcontent"><AgregarEventoFormContainer/></div> : undefined }
+        {!!Session.get('camaraActiva') ? <div className="desktopcontent"><button className="btn btn-primary" onClick={() => {browserHistory.replace('/add')}}>Agregar evento</button></div> : undefined }
         {!!Session.get('camaraActiva') ? <div className="mobilecontent"><button className="btn btn-primary" onClick={() => {browserHistory.replace('/add')}}>Agregar evento</button></div> : undefined }
-        
+
       </div>
     )
   }
 }
 
 export default ListaEventosContainer = withTracker((props) => {
+  console.log(Session.get('camaraActiva'));
   Meteor.subscribe('eventos', Session.get('camaraActiva'));
   return {
       eventos: Eventos.find().fetch()

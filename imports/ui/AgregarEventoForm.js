@@ -14,7 +14,7 @@ export class AgregarEventoForm extends React.Component {
       selectedOption: 'soft',
       modalShow: false,
       error: '',
-      descripcionEvento: 'Reseteo por software'
+      descripcionEvento: 'Reseteo por software',
     }
   }
 
@@ -98,11 +98,11 @@ export class AgregarEventoForm extends React.Component {
 }
 
 export default withTracker((props) => {
-    const cam = Session.get('camaraActiva');
-    if (cam) {
-      Meteor.subscribe('camaras');
+    const cam = Camaras.findOne({_id: Session.get('camaraActiva')});
+    console.log(cam);
+    if (!!cam) {
       return {
-        camara: Camaras.findOne({_id: cam})
+        camara: cam
       }
     }
     else return undefined;
