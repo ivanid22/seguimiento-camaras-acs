@@ -30,7 +30,7 @@ export class Dashboard extends React.Component {
           <div className="container">
             <ListaCamarasContainer/>
             <div className="mt-3">
-                {/* <ListaEventosContainer/> */}
+                <ListaEventosContainer/>
             </div>
           </div>
         </div>

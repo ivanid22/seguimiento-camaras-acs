@@ -83,7 +83,7 @@ export class AgregarEvento extends React.Component {
             </div>
             {this.state.error !== '' ? <div className="alert alert-danger"><strong>Error! </strong><p>{this.state.error}</p></div> : undefined }
             <button className="btn btn-primary" onClick={this.onSubmit.bind(this)}>Agregar</button>
-            <button className="btn btn-secondary" onClick={() => {browserHistory.replace('/')}}>Cerrar</button>
+            <button className="btn btn-secondary ml-3" onClick={() => {browserHistory.replace('/')}}>Cancelar</button>
           </form>
         </div>
       </div>
