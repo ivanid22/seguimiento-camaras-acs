@@ -53,7 +53,6 @@ export class ListaEventos extends React.Component {
 }
 
 export default ListaEventosContainer = withTracker((props) => {
-  console.log(Session.get('camaraActiva'));
   Meteor.subscribe('eventos', Session.get('camaraActiva'));
   return {
       eventos: Eventos.find().fetch()

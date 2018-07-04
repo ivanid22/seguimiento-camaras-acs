@@ -3,6 +3,7 @@ import React from 'react';
 import DetalleCamaraContainer from './DetalleCamara';
 import ListaCamarasContainer from './ListaCamaras';
 import ListaEventosContainer from './ListaEventos';
+import {withTracker} from 'meteor/react-meteor-data';
 import {Link, browserHistory} from 'react-router';
 import {NavBar} from './NavBar'
 
@@ -29,8 +30,8 @@ export class Dashboard extends React.Component {
         <div className="mobilecontent">
           <div className="container">
             <ListaCamarasContainer/>
-            <div className="mt-3">
-                <ListaEventosContainer/>
+            <div className="mt-3 list-group">
+                {!!this.props.camaraActiva ? <button className="btn btn-secondary" onClick={() => {browserHistory.replace('/eventos')}}>Eventos</button> : undefined}
             </div>
           </div>
         </div>
@@ -38,3 +39,9 @@ export class Dashboard extends React.Component {
     )
   }
 }
+
+export default withTracker((props) => {
+    return {
+      camaraActiva: Session.get('camaraActiva')
+    }
+})(Dashboard);

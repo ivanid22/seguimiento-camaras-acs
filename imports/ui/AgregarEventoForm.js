@@ -99,7 +99,6 @@ export class AgregarEventoForm extends React.Component {
 
 export default withTracker((props) => {
     const cam = Camaras.findOne({_id: Session.get('camaraActiva')});
-    console.log(cam);
     if (!!cam) {
       return {
         camara: cam
