@@ -14,7 +14,9 @@ export default class AgregarCamaraForm extends React.Component {
       ubicacionValue: 'Alero Norte',
       nombreValue: '',
       selectedOption: 'AN',
-      error: ''
+      error: '',
+      buttonClassState: '',
+      hasSubmitted: false
     };
   }
 
@@ -45,19 +47,25 @@ export default class AgregarCamaraForm extends React.Component {
 
   onSubmit(e) {
     e.preventDefault();
-    Meteor.call('camaras.insert', {
-      nombre: this.state.nombreValue,
-      ubicacion: this.state.ubicacionValue,
-      estado: 'Activa',
-      modelo: this.state.modeloValue
-    }, (err, res) => {
-      if(!err) {
-        browserHistory.replace('/');
-      }
-      else {
-        this.setState({error: err.reason})
-      }
-    })
+    if(!this.state.hasSubmitted) {
+      this.setState({
+        hasSubmitted: true,
+        buttonClassState: 'disabled'
+      });
+      Meteor.call('camaras.insert', {
+        nombre: this.state.nombreValue,
+        ubicacion: this.state.ubicacionValue,
+        estado: 'Activa',
+        modelo: this.state.modeloValue
+      }, (err, res) => {
+        if(!err) {
+          browserHistory.replace('/');
+        }
+        else {
+          this.setState({error: err.reason, hasSubmitted: false, buttonClassState: ''});
+        }
+      });
+    }
   }
 
   render() {
@@ -65,7 +73,7 @@ export default class AgregarCamaraForm extends React.Component {
       <div>
         <NavBar/>
         <div className="container">
-          <form>
+          <form onSubmit={this.onSubmit.bind(this)}>
             <div className="form-group">
               <label htmlFor="nombreText">Nombre</label>
               <input className="form-control" type="text" id="nombreText" value={this.state.nombreValue} onChange={this.handleNombreChange.bind(this)}/>
@@ -93,7 +101,7 @@ export default class AgregarCamaraForm extends React.Component {
               </div>
             </div>
             {this.state.error !== '' ? <div className="alert alert-danger"><strong>Error! </strong><p>{this.state.error}</p></div> : undefined }
-            <button className="btn btn-primary" onClick={this.onSubmit.bind(this)}>Agregar camara</button> <button className="btn btn-secondary ml-3" onClick={() => {browserHistory.replace('/')}}>Cancelar</button>
+            <button className={`btn btn-primary${this.state.buttonClassState}`} type="submit">Agregar camara</button> <button className="btn btn-secondary ml-3" onClick={() => {browserHistory.replace('/')}}>Cancelar</button>
           </form>
         </div>
       </div>

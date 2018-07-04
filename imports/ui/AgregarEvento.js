@@ -17,7 +17,9 @@ export class AgregarEvento extends React.Component {
       error: '',
       descripcionEvento: 'Reseteo por software',
       selectedOption: 'soft',
-      momento: new Date()
+      momento: new Date(),
+      buttonClassState: '',
+      hasSubmitted: false
     }
     moment.locale('es');
   }
@@ -26,7 +28,9 @@ export class AgregarEvento extends React.Component {
     this.setState({
       descripcionEvento: 'Reseteo por software',
       error: '',
-      selectedOption: 'soft'
+      selectedOption: 'soft',
+      hasSubmitted: false,
+      buttonClassState: ''
     });
     browserHistory.replace('/');
   }
@@ -46,24 +50,25 @@ export class AgregarEvento extends React.Component {
 
   onSubmit(e) {
     e.preventDefault();
-    if(Session.get('camaraActiva')) {
-        const res = Meteor.call('eventos.insert', Session.get('camaraActiva'), moment(this.state.momento).valueOf(), this.state.descripcionEvento, (err, res) => {
-          if(!err) {
-            this.cerrar();
-          }
-          else {
-            console.log(err)
-            this.setState({error: err.details});
-          }
-        });
+    this.setState({buttonClassState: ' disabled'});
+    if(!this.state.hasSubmitted) {
+      if(Session.get('camaraActiva')) {
+          this.setState({hasSubmitted: true});
+          const res = Meteor.call('eventos.insert', Session.get('camaraActiva'), moment(this.state.momento).valueOf(), this.state.descripcionEvento, (err, res) => {
+            if(!err) {
+              this.cerrar();
+            }
+            else {
+              console.log(err);
+              this.setState({error: err.details, buttonClassState: '', hasSubmitted: false});
+            }
+          });
       }
+    }
   }
 
   setDate(e) {
     this.setState({momento: e});
-    console.log(e);
-    console.log(moment(e).valueOf());
-    console.log(moment().valueOf());
   }
 
 
@@ -72,7 +77,7 @@ export class AgregarEvento extends React.Component {
       <div>
         <NavBar/>
         <div className="container">
-          <form>
+          <form onSubmit={this.onSubmit.bind(this)}>
             <div className="form-group">
               <div className="form-check">
                 <input className="form-check-input" type="radio" name="descripcionEventoGroup" id="softResetId" value="soft" checked={this.state.selectedOption === 'soft'} onChange={this.handleToggle.bind(this)}/>
@@ -96,7 +101,7 @@ export class AgregarEvento extends React.Component {
               </div>
             </div>
             {this.state.error !== '' ? <div className="alert alert-danger"><strong>Error! </strong><p>{this.state.error}</p></div> : undefined }
-            <button className="btn btn-primary" onClick={this.onSubmit.bind(this)}>Agregar</button>
+            <button className={`btn btn-primary${this.state.buttonClassState}`} type="submit">Agregar</button>
             <button className="btn btn-secondary ml-3" onClick={() => {browserHistory.replace('/')}}>Cancelar</button>
           </form>
         </div>

@@ -12,6 +12,7 @@ import moment from 'moment';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 Meteor.startup(() => {
+    moment.locale('es');
     Session.set({
       camaraActiva: undefined
     });
