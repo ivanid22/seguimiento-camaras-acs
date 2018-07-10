@@ -30,3 +30,8 @@ html {
   color: #212529;
   width: 100%;
 }
+
+.revisiones-list-item {
+  display: flex;
+  flex-direction: column;
+}

@@ -8,6 +8,8 @@ import AgregarCamara from '../ui/AgregarCamaraForm';
 import {Signup} from '../ui/Signup';
 import {Login} from '../ui/Login';
 import EventosContainerMobile from '../ui/EventosContainerMobile';
+import RevisionesTecnicas from '../ui/RevisionesTecnicas';
+import AgregarRevisionForm from '../ui/AgregarRevisionForm';
 
 export const publicRoutes = ['/login', '/signup', '/about'];
 export const privateRoutes = ['/camaras', '/add', '/'];
@@ -35,5 +37,7 @@ export const routes = (
     <Route path="/camaras" component={Dashboard}/>
     <Route path="/agregarCamara" component={AgregarCamara}/>
     <Route path="/eventos" component={EventosContainerMobile}/>
+    <Route path="/revisiones" component={RevisionesTecnicas}/>
+    <Route path="/agregarRevision" component={AgregarRevisionForm}/>
   </Router>
 );

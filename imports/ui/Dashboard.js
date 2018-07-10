@@ -19,7 +19,9 @@ export class Dashboard extends React.Component {
             <div className="row">
               <div className="col-lg-3 col-md-3">
                 <ListaCamarasContainer/>
-
+                <div className="list-group">
+                  <button className="btn btn-secondary mt-3" onClick={() => { browserHistory.replace('/revisiones') }}>Revisiones tecnicas</button>
+                </div>
               </div>
               <div className="col-lg-9 col-md-9">
                 <ListaEventosContainer/>
@@ -32,6 +34,7 @@ export class Dashboard extends React.Component {
             <ListaCamarasContainer/>
             <div className="mt-3 list-group">
                 {!!this.props.camaraActiva ? <button className="btn btn-secondary" onClick={() => {browserHistory.replace('/eventos')}}>Eventos</button> : undefined}
+                <button className="btn btn-secondary mt-3" onClick={() => { browserHistory.replace('/revisiones') }}>Revisiones tecnicas</button>
             </div>
           </div>
         </div>
